@@ -30,7 +30,7 @@ class Robot:
 		pass
 
 	def test(self):
-		# self._angle1 += 1
-		# self._angle2 += 1
+		self._angle1 += 1
+		self._angle2 += 1
 		self._direction += 1
 		self._render.render(self._angle1, self._angle2, self._direction)
