@@ -4,16 +4,16 @@ import turtle
 class Pen:
 	def __init__(self, pen: turtle.Turtle):
 		self._pen = pen
-		self._color = (0, 0, 0) # default color
+		self._color = 0, 0, 0 # default color
 		self._width = 1  # default pen width
 		self._size = 16  # default text size
 		self._fill = False
 		self._align = "center"
 		self._pen.hideturtle()
 
-	def color(self, color: tuple):
+	def color(self, *color: int):
 		self._color = color
-		self._pen.color(color)
+		self._pen.color(*color)
 		return self
 
 	def width(self, width: int):
@@ -33,8 +33,11 @@ class Pen:
 		self._fill = fill
 		return self
 
-	def goto(self, point: tuple):
-		self._pen.penup()
+	def goto(self, point: tuple, pendown: bool = False):
+		if pendown:
+			self._pen.pendown()
+		else:
+			self._pen.penup()
 		self._pen.goto(point)
 
 	def showText(self, text: str, point: tuple):
@@ -65,16 +68,13 @@ class Pen:
 		self._pen.circle(radius)
 		self._pen.end_fill()
 
-
 	def clear(self):
 		self._pen.clear()
 
 if __name__ == "__main__":
 	window = turtle.Screen()
-	window.setup(800, 600)
 	window.colormode(255)
 	pen = Pen(turtle.Turtle())
-	pen.color((255, 0, 0)).width(10).drawLine((0, 0), (100, 100))
-	pen.color((0, 0, 255)).width(5).drawCircle((0, 0), 30)
-	pen.color((0, 0, 0)).size(20).align("right").showText("Hello, World!", (-50, 0))
+	pen.color(255, 0, 0).width(10).drawLine((0, 0), (100, 100))
+	pen.color(0, 0, 255).size(20).align("right").showText("Hello, World!", (-50, 0))
 	window.exitonclick()

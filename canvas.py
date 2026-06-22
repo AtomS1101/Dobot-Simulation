@@ -29,6 +29,6 @@ class Canvas:
 if __name__ == "__main__":
 	canvas = Canvas(800, 600)
 	canvas.setup()
-	canvas.pen("test").color((0, 255, 0)).width(10).drawLine((0, 0), (100, 100))
+	canvas.pen("test").color(0, 255, 0).width(10).drawLine((0, 0), (100, 100))
 	canvas.update()
 	canvas.exit()

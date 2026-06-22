@@ -21,9 +21,9 @@ ANGLED_CRD_END    = (400, 400)
 # Front Field Settings
 FRONT_VIEW_BEGIN = (30, -320)
 FRONT_VIEW_END   = (470, 10)
-FRONT_ORIGIN     = ((FRONT_VIEW_BEGIN[0] + FRONT_VIEW_END[0]) // 2, -279)
+FRONT_ORIGIN     = ((FRONT_VIEW_BEGIN[0] + FRONT_VIEW_END[0]) // 2, -273)
 FRONT_CRD_BEGIN  = (-200, -50)
-FRONT_CRD_END    = (200, 350)
+FRONT_CRD_END    = (200, 300)
 
 # Top Field Settings
 TOP_VIEW_BEGIN = (-470, 30)
@@ -35,4 +35,4 @@ TOP_CRD_END    = (500, 300)
 # Robot Arm Settings
 ARM_1_LENGTH = 135  # default is 135
 ARM_2_LENGTH = 147  # default is 147
-ARM_3_LENGTH = 10
+ARM_3_LENGTH = 30
