@@ -8,8 +8,9 @@ X_AXIS_ANGLE    = 10
 Y_AXIS_ANGLE    = 40
 JOINT_SIZE      = 5
 AXIS_MARGIN     = 30
+PEN_TOLERANCE   = 5
 SHOW_JOINT_NAME = True
-SHOW_ORBIT      = False
+SHOW_ORBIT      = True
 
 # Angled Field Settings
 ANGLED_VIEW_BEGIN = (-470, -320)
