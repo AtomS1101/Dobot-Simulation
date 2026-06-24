@@ -8,18 +8,32 @@ class Render:
 	def __init__(self):
 		self._canvas = Canvas(settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT)
 		self._canvas.setup()
+		self._canvas.pen("top_orbit").color(200, 0, 0).size(1).clear()
+		self._canvas.pen("angled_orbit").color(0, 0, 200).size(1).clear()
+		self._firstTime = True
 
 	def showInfo(self, info: list):
 		self._canvas.pen("info").color(0, 0, 0).size(20).align("left").clear()
 		self._canvas.pen("info").showText("< Information >", (150, 250))
-		infoList = {"θ1": info[0], "θ2": info[1], "φ": info[2], "P": f"({info[3]:.2f}, {info[4]:.2f}, {info[5]:.2f})", "Q": f"({info[6]:.2f}, {info[7]:.2f}, {info[8]:.2f})"}
+		infoList = {"θ1": f"{info[0]:.2f} °", "θ2": f"{info[1]:.2f} °", "φ": f"{info[2]:.2f} °",
+			"P": f"({info[3]:.2f}, {info[4]:.2f}, {info[5]:.2f})",
+			"Q": f"({info[6]:.2f}, {info[7]:.2f}, {info[8]:.2f})",
+			"R": f"({info[9]:.2f}, {info[10]:.2f}, {info[11]:.2f})"}
 		for line, (key, value) in enumerate(infoList.items()):
 			self._canvas.pen("info").showText(f"{key}", (150, 220 - (line * 30)))
 			self._canvas.pen("info").showText(f": {value}", (180, 220 - (line * 30)))
 
 	def showOrbit(self, rx: float, ry: float, rz: float):
-		self._canvas.pen("orbit").color(200, 0, 0).size(1)
-		self._canvas.pen("orbit").goto(convCrd("angled", (rx, ry, rz)), True)
+		if (rz < settings.PEN_TOLERANCE / 2) and (rz > - settings.PEN_TOLERANCE / 2): # whether pen touches a paper
+			self._canvas.pen("top_orbit").goto(convCrd("top", (rx, ry)), True)
+			self._canvas.pen("angled_orbit").goto(convCrd("angled", (rx, ry, rz)), True)
+		else:
+			self._canvas.pen("top_orbit").goto(convCrd("top", (rx, ry)), False)
+			self._canvas.pen("angled_orbit").goto(convCrd("angled", (rx, ry, rz)), False)
+		if self._firstTime:
+			self._canvas.pen("top_orbit").clear()
+			self._canvas.pen("angled_orbit").clear()
+			self._firstTime = False
 
 	def render(self, angle1: float, angle2: float, direction: float):
 		px =  settings.ARM_1_LENGTH * math.cos(math.radians(angle1)) * math.cos(math.radians(direction))
@@ -69,10 +83,9 @@ class Render:
 			self._canvas.pen("angled").showText("P", convCrd("angled", (px+10, py, pz)))
 			self._canvas.pen("angled").showText("Q", convCrd("angled", (qx+10, qy, qz)))
 			self._canvas.pen("angled").showText("R", convCrd("angled", (rx+10, ry, rz)))
-		infoList = [angle1, angle2, direction, px, py, pz, qx, qy, qz]
+		infoList = [angle1, angle2, direction, px, py, pz, qx, qy, qz, rx, ry, rz]
 		self.showInfo(infoList)
-		if settings.SHOW_ORBIT:
-			self.showOrbit(rx, ry, rz)
+		self.showOrbit(rx, ry, rz)
 		self._canvas.update()
 
 	def drawAxis(self):
