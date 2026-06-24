@@ -7,7 +7,6 @@ class Pen:
 		self._color = 0, 0, 0 # default color
 		self._width = 1  # default pen width
 		self._size = 16  # default text size
-		self._fill = False
 		self._align = "center"
 		self._pen.hideturtle()
 
@@ -27,10 +26,6 @@ class Pen:
 
 	def align(self, align: str):
 		self._align = align
-		return self
-
-	def fill(self, fill: bool):
-		self._fill = fill
 		return self
 
 	def goto(self, point: tuple, pendown: bool = False):

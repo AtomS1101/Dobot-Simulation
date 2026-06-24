@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from render import Render
-import settings
+import settings as S
 import math
 
 class Robot:
@@ -20,13 +20,13 @@ class Robot:
 		self._direction = direction
 
 	def setCoordinates(self, x: float, y: float, z: float):
-		z += settings.ARM_3_LENGTH
+		z += S.ARM_3_LENGTH
 		try:
 			direction = math.atan2(y, x)
-			angle2 = math.acos((settings.ARM_1_LENGTH**2 + settings.ARM_2_LENGTH**2 - x**2 - y**2 - z**2)/(2 * settings.ARM_1_LENGTH * settings.ARM_2_LENGTH))
+			angle2 = math.acos((S.ARM_1_LENGTH**2 + S.ARM_2_LENGTH**2 - x**2 - y**2 - z**2)/(2 * S.ARM_1_LENGTH * S.ARM_2_LENGTH))
 			R = math.sqrt(x**2 + y**2)
-			A = settings.ARM_1_LENGTH - settings.ARM_2_LENGTH * math.cos(angle2)
-			B = settings.ARM_2_LENGTH * math.sin(angle2)
+			A = S.ARM_1_LENGTH - S.ARM_2_LENGTH * math.cos(angle2)
+			B = S.ARM_2_LENGTH * math.sin(angle2)
 			angle1 = math.atan2(B * R + A * z, A * R - B * z)
 			self._angle1 = math.degrees(angle1)
 			self._angle2 = math.degrees(angle2)
