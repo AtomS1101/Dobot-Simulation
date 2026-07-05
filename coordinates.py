@@ -18,3 +18,32 @@ def convCrd(viewMode: str, point: tuple) -> tuple:
 	else:
 		return point
 	return (int(x), int(y))
+
+def angleToCrd(angle1: float, angle2: float, direction: float) -> dict:
+	px =  S.ARM_1_LENGTH * math.cos(math.radians(angle1)) * math.cos(math.radians(direction))
+	py =  S.ARM_1_LENGTH * math.cos(math.radians(angle1)) * math.sin(math.radians(direction))
+	pz =  S.ARM_1_LENGTH * math.sin(math.radians(angle1))
+	qx = (S.ARM_1_LENGTH * math.cos(math.radians(angle1)) - S.ARM_2_LENGTH * math.cos(math.radians(angle1 + angle2))) * math.cos(math.radians(direction))
+	qy = (S.ARM_1_LENGTH * math.cos(math.radians(angle1)) - S.ARM_2_LENGTH * math.cos(math.radians(angle1 + angle2))) * math.sin(math.radians(direction))
+	qz =  S.ARM_1_LENGTH * math.sin(math.radians(angle1)) - S.ARM_2_LENGTH * math.sin(math.radians(angle1 + angle2))
+	rx = qx
+	ry = qy
+	rz = qz - S.ARM_3_LENGTH
+	return {"px": px, "py": py, "pz": pz, "qx": qx, "qy": qy, "qz": qz, "rx": rx, "ry": ry, "rz": rz}
+
+def crdToAngles(x: float, y: float, z: float) -> dict:
+	z += S.ARM_3_LENGTH
+	try:
+		direction = math.atan2(y, x)
+		angle2 = math.acos((S.ARM_1_LENGTH**2 + S.ARM_2_LENGTH**2 - x**2 - y**2 - z**2)/(2 * S.ARM_1_LENGTH * S.ARM_2_LENGTH))
+		R = math.sqrt(x**2 + y**2)
+		A = S.ARM_1_LENGTH - S.ARM_2_LENGTH * math.cos(angle2)
+		B = S.ARM_2_LENGTH * math.sin(angle2)
+		angle1 = math.atan2(B * R + A * z, A * R - B * z)
+		angle1 = math.degrees(angle1)
+		angle2 = math.degrees(angle2)
+		direction = math.degrees(direction)
+		return {"angle1": angle1, "angle2": angle2, "direction": direction}
+	except Exception as e:
+		print(e)
+		return {}

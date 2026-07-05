@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
 from robot import Robot
-import time
-import math
+from robot import PTPMode
 
 def main():
 	robot = Robot()
-	robot.ConnectDobot("COM3", 115200)
-	robot.SetDeviceName("Dobot Test")
-	x, y, z = 0, 30, 50
-	for n in range(100):
-		x += 50/100
-		y += 70/100
-		z -= 50/100
-		robot.test(x, y, z)
-		time.sleep(0.01)
-	t = 0
+	api = robot.load()
+	robot.ConnectDobot(api, "COM3", 115200)
+	robot.SetDeviceName(api, "Dobot Test")
+	robot.SetPTPCoordinateParams(api, 300, 200, 100, 100, True)
+	robot.SetPTPCommonParams(api, 100, 100, True)
 	while True:
-		x = 50 * math.cos(5 * t) + 40 * math.sin(3 * t) # 50
-		y = 50 * math.sin(3 * t) + 100 # 100
-		t += 0.01
-		robot.test(x, y, 0)
-		time.sleep(0.01)
+		robot.SetPTPCmdEx(api, PTPMode.PTPMOVLXYZMode, 100,  50, 0, 0, True)
+		robot.SetPTPCmdEx(api, PTPMode.PTPMOVLXYZMode, 100, -50, 0, 0, True)
+		robot.SetPTPCmdEx(api, PTPMode.PTPMOVLXYZMode, 200,   0, 0, 0, True)
 
 if __name__ == "__main__":
 	main()
