@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import turtle
-from pen import Pen
+from .pen import Pen
 
 class Canvas:
 	def __init__(self, width: int, height: int):

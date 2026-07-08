@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-from robot import Robot
-from robot import PTPMode
+from Simulator.robot import Robot, PTPMode
 
 def main():
 	robot = Robot()

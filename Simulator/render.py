@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import settings as S
-from canvas import Canvas
-from coordinates import convCrd, angleToCrd
+from . import settings as S
+from .canvas import Canvas
+from .coordinates import convCrd, angleToCrd
 
 class Render:
 	def __init__(self):

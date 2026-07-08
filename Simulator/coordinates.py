@@ -1,5 +1,5 @@
 import math
-import settings as S
+from . import settings as S
 
 def convCrd(viewMode: str, point: tuple) -> tuple:
 	if viewMode == "angled":

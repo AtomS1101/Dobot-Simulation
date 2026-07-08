@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-from render import Render
-from coordinates import angleToCrd, crdToAngles
+from .render import Render
+from .coordinates import angleToCrd, crdToAngles
+from . import settings as S
 import time
-import settings as S
+from enum import Enum
 
 class JC:
 	JogAPPressed = 1
 
-class PTPMode:
+class PTPMode(Enum):
 	PTPJUMPXYZMode   = 0
 	PTPMOVJXYZMode   = 1
 	PTPMOVLXYZMode   = 2
@@ -15,7 +16,7 @@ class PTPMode:
 	PTPMOVJANGLEMode = 4
 	PTPMOVLANGLEMode = 5
 
-class DobotConnect:
+class DobotConnect(Enum):
 	DobotConnect_NoError = None
 
 class Robot:
@@ -84,7 +85,7 @@ class Robot:
 	def SetHOMEParams(self, api: str, x: float, y: float, z: float, r: float, queued=True):
 		self._home = [x, y, z]
 
-	def SetHOMECmdEx(self, api: str, mode: int, queued=True):
+	def SetHOMECmdEx(self, api: str, mode: PTPMode, queued=True):
 		self._setCoordinates(*self._home)
 
 	def SetJOGJointParams(self, api:str, v1:float, v2:float, v3:float, v4:float, a1:float, a2:float, a3:float, a4:float, queued=True):
